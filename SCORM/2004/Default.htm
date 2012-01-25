@@ -17,37 +17,37 @@
     //document.domain="";
 
 
-	//If set to true, will require SCORM API to be found when opening course.
-	//Set to false for convenience when testing locally; recommend setting to true for production
-	CONFIG.requireSCORMAPI = false;
+    //If set to true, will require SCORM API to be found when opening course.
+    //Set to false for convenience when testing locally; recommend setting to true for production
+    CONFIG.requireSCORMAPI = false;
 
 
-	//If set to true, will log SCORM communication to browser console (if available)
-	CONFIG.logEvents = true;
+    //If set to true, will log SCORM communication to browser console (if available)
+    CONFIG.logEvents = true;
 
 
-	//set to false if you don't want your SWF auto-centered.
-	CONFIG.centerSWF = true;
+    //set to false if you don't want your SWF auto-centered.
+    CONFIG.centerSWF = true;
 
 
-	//What do you wish to tell the learner if the SCORM connection fails to start?
+    //What do you wish to tell the learner if the SCORM connection fails to start?
     CONFIG.scormUnavailableMessage = "Sorry, but the course is not available at this time (SCORM API not found or malfunctioning). Please try again. If you continue to encounter problems, please contact the course administrator.";
 
 
 
-	//Need to run any of your own JavaScript? Place it inside this function.
-	//Important: this function is only invoked after the SWF has finished loading!
-	//For large SWFs, it could take a while.
-	customJavaScript = function (){
+    //Need to run any of your own JavaScript? Place it inside this function.
+    //Important: this function is only invoked after the SWF has finished loading!
+    //For large SWFs, it could take a while.
+    customJavaScript = function (){
 
-		//Your custom scripts here.
+        //Your custom scripts here.
 
-		//You can access the SWF directly by using the 'CaptivateSWF' variable, such as
-		//CaptivateSWF.Play();
-		logEvent("Custom JavaScript has executed.");
+        //You can access the SWF directly by using the 'CaptivateSWF' variable, such as
+        //CaptivateSWF.Play();
+        logEvent("Custom JavaScript has executed.");
 
 
-	};
+    };
 
 
 /* ===============================================================
@@ -71,12 +71,12 @@
     params.wmode = CONFIG.swfWindowMode;
     attributes.name = CONFIG.targetElementID;
 
-	initializeCourse();
+    initializeCourse();
 
 </script>
 <style>
     body { text-align: center; margin: 0; padding: 1em; height: 100%; background: @SKINCOLOR }
-	body.centered { margin: 0; padding: 0; overflow: hidden; }
+body.centered { margin: 0; padding: 0; overflow: hidden; }
     body.centered #Captivate { position: absolute; top: 50%; left: 50%; } /* JavaScript is used to set pixel values for margin-left and margin-top */
 </style>
 </head>

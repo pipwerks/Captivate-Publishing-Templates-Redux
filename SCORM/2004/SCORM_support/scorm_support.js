@@ -7,8 +7,8 @@ var CONFIG = {},
     flashvars = {},
     params = {},
     attributes = {},
-	customJavaScript,
-	SCORM_API = null,
+    customJavaScript,
+    SCORM_API = null,
     unloaded = false,
     isInitialized = false,
     isTerminated = false,
@@ -272,14 +272,14 @@ displayScormFailureMessage = function (){
 
 initializeSCORM = function (){
 
-	if(!SCORM_API){
-		if(CONFIG.requireSCORMAPI){ displayScormFailureMessage(); }
-		return;
-	}
+    if(!SCORM_API){
+        if(CONFIG.requireSCORMAPI){ displayScormFailureMessage(); }
+        return;
+    }
 
     isInitialized = SCORM_API.Initialize("");
 
-	if(isInitialized){
+if(isInitialized){
         courseStatus = SCORM_API.GetValue("cmi.completion_status");
         if(courseStatus === "not attempted"){
             SCORM_API.SetValue("cmi.completion_status", "incomplete");
