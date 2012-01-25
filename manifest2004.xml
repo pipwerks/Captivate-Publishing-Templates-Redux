@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<manifest identifier="@RD_MQZ_MANIFEST_ID" version="1.3" xmlns="http://www.imsglobal.org/xsd/imscp_v1p1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:imscp="http://www.imsglobal.org/xsd/imscp_v1p1"
+	xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_v1p3"
+	xmlns:imsss="http://www.imsglobal.org/xsd/imsss"
+	xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 imscp_v1p1.xsd
+						http://www.adlnet.org/xsd/adlcp_v1p3 adlcp_v1p3.xsd
+						http://www.imsglobal.org/xsd/imsss imsss_v1p0.xsd
+						http://ltsc.ieee.org/xsd/LOM lomStrict.xsd">
+	<metadata>
+		<schema>ADL SCORM</schema>
+		<schemaversion>CAM 1.3</schemaversion>
+		<lom xmlns="http://ltsc.ieee.org/xsd/LOM">
+			<general>
+				<identifier>
+					<catalog>Adobe Captivate Course</catalog>
+					<entry>@RD_MQZ_MANIFEST_ID_ENTRY</entry>
+				</identifier>
+				<title>
+					<string language="x-none">@RD_MQZ_MANIFEST_TITLE</string>
+				</title>
+				<description>
+					<string language="x-none">@RD_MQZ_MANIFEST_DESCRIPTION</string>
+				</description>
+				<keyword>
+					<string language="x-none">@RD_MQZ_MANIFEST_SUBJECT</string>
+				</keyword>
+			</general>
+			<lifeCycle>
+				<version>
+					<string language="x-none">@RD_MQZ_MANIFEST_LIFE_VER</string>
+				</version>
+				<status>
+					<source>LOMv1.0</source>
+					<value>final</value>
+				</status>
+			</lifeCycle>
+			<metaMetadata>
+				<identifier>
+					<catalog>test</catalog>
+					<entry>test 1000</entry>
+				</identifier>
+				<metadataSchema>LOMv1.0</metadataSchema>
+				<metadataSchema>SCORM_CAM_v1.3</metadataSchema>
+			</metaMetadata>
+			<technical>
+				<format>text/html</format>
+				<location>.</location>
+			</technical>
+			<educational>
+				<typicalLearningTime>
+					<duration>@RD_MQZ_MANIFEST_DURATION</duration>
+					<description>
+						<string language="x-none">Average length of time to experience this Adobe Captivate Project.</string>
+					</description>
+				</typicalLearningTime>
+			</educational>
+			<rights>
+				<cost>
+					<source>LOMv1.0</source>
+					<value>no</value>
+				</cost>
+				<copyrightAndOtherRestrictions>
+					<source>LOMv1.0</source>
+					<value>no</value>
+				</copyrightAndOtherRestrictions>
+			</rights>
+			<classification>
+				<purpose>
+					<source>LOMv1.0</source>
+					<value>idea</value>
+				</purpose>
+				<description>
+					<string language="x-none">@RD_MQZ_MANIFEST_DESCRIPTION_CLASSIFICATION</string>
+				</description>
+				<keyword>
+					<string language="x-none">Adobe Captivate</string>
+					<string language="x-none">@RD_MQZ_MANIFEST_CLASSIFICATION_SUBJECT</string>
+				</keyword>
+			</classification>
+		</lom>
+	</metadata>
+	<organizations default="@RD_MQZ_MANIFEST_ORGS_ID">
+		<organization identifier="@RD_MQZ_MANIFEST_ID_ORG">
+			<title>@RD_MQZ_MANIFEST_TITLE_ORG</title>
+			<item identifier="@RD_MQZ_MANIFEST_ID_SCO" isvisible="true" identifierref="@RD_MQZ_MANIFEST_ID_RES_REF">
+				<title>@RD_MQZ_MANIFEST_TITLE_SCO</title>
+				<imsss:sequencing>
+					<imsss:objectives>
+						<imsss:primaryObjective objectiveID="PRIMARYOBJ" satisfiedByMeasure="false">
+						</imsss:primaryObjective>
+					</imsss:objectives>
+
+					<!-- to override the default SCORM 2004 completion setting, add this... -->
+					<imsss:deliveryControls completionSetByContent="true" objectiveSetByContent="true"/>
+
+				</imsss:sequencing>
+				<adlcp:dataFromLMS>@RD_MQZ_MANIFEST_SCO_DATA</adlcp:dataFromLMS>
+				<adlcp:timeLimitAction>@RD_MQZ_MANIFEST_SCO_ACTION</adlcp:timeLimitAction>
+			</item>
+		</organization>
+	</organizations>
+	<resources>
+		<resource adlcp:scormType="sco" identifier="@RD_MQZ_MANIFEST_ID_RES" type="webcontent" href="@RD_MQZ_MANIFEST_HTM_NAME_HREF">
+			<file href="@RD_MQZ_MANIFEST_SWF_NAME"></file>
+			<file href="@RD_MQZ_MANIFEST_HTM_NAME"></file>
+            <file href="SCORM_support/scorm_support.js"/>
+		</resource>
+	</resources>
+</manifest>
