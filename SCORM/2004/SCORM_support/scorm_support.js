@@ -1,5 +1,6 @@
 /*global RightClick, swfobject */
 /* scorm_support.js, rewritten by Philip Hutchison, January 2012
+   version 1.20120202
    http://pipwerks.com/2012/01/11/cleaning-up-adobe-captivates-scorm-publishing-template-part-1-introduction/
 */
 
@@ -18,7 +19,7 @@ var CONFIG = {},
     setValueWasSuccessful = true,
     CaptivateSWF, //Cache the reference to the SWF to avoid future lookups
     logEvent,
-    cmiCache,
+    isCached,
     findAPI,
     getAPI,
     Captivate_DoExternalInterface,
@@ -48,14 +49,14 @@ logEvent = function (msg){
 
 
 /*
-   cmiCache(property, value)
+   isCached(property, value)
    Caches CMI value to help prevent sending duplicate data to LMS.
 
    Parameters: property (CMI property name), value (CMI value, normally a string)
-   Returns:    property value if cached version found, false if not cached.
+   Returns:    boolean indicating whether prop/value pair is in the CMI cache.
 */
 
-cmiCache = function(property, value){
+isCached = function(property, value){
 
     //Ensure we have a valid property to work with
     if(typeof property === "undefined"){ return false; }
@@ -63,9 +64,9 @@ cmiCache = function(property, value){
     //Replace all periods in CMI property names so we don't run into JS errors
     property = property.replace(/\./g,'_');
 
-    //If cached value exists, return it
-    if(typeof value_store[property] !== "undefined"){
-        return value_store[property];
+    //If prop/value pair is cached, return true
+    if(typeof value_store[property] !== "undefined" && value_store[property] === value){
+		return true;
     }
 
     //Otherwise add to cache
@@ -181,13 +182,10 @@ Captivate_DoExternalInterface = function (command, parameter, value, variable) {
 
             if(parameter === "completion_status"){ courseStatus = value; }
 
-            //Check to see if value is already cached
-            var cached_value = cmiCache(parameter, value);
-
             //Only send value to LMS if it hasn't already been sent;
             //If value is cached and matches what is about to be sent
             //to the LMS, prevent value from being sent a second time.
-            if(!cached_value || cached_value !== value){
+            if(!isCached(parameter, value)){
 
                 strErr = SCORM_API.SetValue(parameter, value);
                 setValueWasSuccessful = (strErr === "true");
