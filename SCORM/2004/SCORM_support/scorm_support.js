@@ -14,6 +14,7 @@ var CONFIG = {},
     isInitialized = false,
     isTerminated = false,
     courseStatus,
+    entryStatus,
     value_store = [],
     lastCommand,
     setValueWasSuccessful = true,
@@ -66,7 +67,7 @@ isCached = function(property, value){
 
     //If prop/value pair is cached, return true
     if(typeof value_store[property] !== "undefined" && value_store[property] === value){
-		return true;
+        return true;
     }
 
     //Otherwise add to cache
@@ -200,6 +201,34 @@ Captivate_DoExternalInterface = function (command, parameter, value, variable) {
 
             break;
 
+        case "GetValue":
+
+            /*
+
+                Captivate asks for a few things when initializing:
+
+                    cmi.entry
+                    cmi.location
+                    cmi.score._children
+                    cmi.suspend_data
+                    cmi.interactions._children
+                    cmi.interactions._count
+                    cmi.launch_data
+                    cmi.objectives._count
+                    cmi.score.scaled
+                    cmi.score.min
+                    cmi.score.max
+                    cmi.score.raw
+
+               If the course is being launched for the very first time, SCORM requires cmi.entry to return "ab-initio".
+               This means there will be no pre-existing data, such as cmi.location, suspend_data, or score.
+               We should therefore prevent Captivate from asking for these items, because it will throw a pointless error in the LMS.
+
+            */
+
+            strErr = (entryStatus === "ab-initio" && /location|suspend_data|score/g.test(parameter)) ? "" : SCORM_API.GetValue(parameter);
+            break;
+
         case "Terminate":
 
             strErr = SCORM_API.Terminate("");
@@ -279,6 +308,7 @@ initializeSCORM = function (){
 
 if(isInitialized){
         courseStatus = SCORM_API.GetValue("cmi.completion_status");
+    entryStatus = SCORM_API.GetValue("cmi.entry");
         if(courseStatus === "not attempted"){
             SCORM_API.SetValue("cmi.completion_status", "incomplete");
             logEvent("cmi.completion_status automatically set to 'incomplete' by wrapper");
