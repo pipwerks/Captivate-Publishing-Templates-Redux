@@ -180,7 +180,7 @@ Captivate_DoExternalInterface = function (command, parameter, value, variable) {
 
         case "SetValue":
 
-            if(parameter === "completion_status"){ courseStatus = value; }
+            if(parameter === "cmi.completion_status"){ courseStatus = value; }
 
             //Only send value to LMS if it hasn't already been sent;
             //If value is cached and matches what is about to be sent
