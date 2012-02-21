@@ -1,7 +1,7 @@
 /*global RightClick, swfobject */
 /* scorm_support.js, rewritten by Philip Hutchison, January 2012
    --- SCORM 1.2 Edition ---
-   version 1.20120214
+   version 1.20120221
    http://pipwerks.com/2012/01/11/cleaning-up-adobe-captivates-scorm-publishing-template-part-1-introduction/
 */
 
@@ -31,7 +31,6 @@ var CONFIG = {},
     createWrapper,
     unloadHandler,
     initializeCourse;
-
 
 
 /*
@@ -204,15 +203,15 @@ Captivate_DoExternalInterface = function (command, parameter, value, variable) {
 
                 Captivate asks for a few things when initializing:
 
-					cmi.core.lesson_location
-					cmi.core._children
-					cmi.suspend_data
-					cmi.interactions._children
-					cmi.interactions._count
-					cmi.launch_data
-					cmi.objectives._count
-					cmi.core.lesson_location
-					cmi.core.score._children
+                    cmi.core.lesson_location
+                    cmi.core._children
+                    cmi.suspend_data
+                    cmi.interactions._children
+                    cmi.interactions._count
+                    cmi.launch_data
+                    cmi.objectives._count
+                    cmi.core.lesson_location
+                    cmi.core.score._children
 
                If the course is being launched for the very first time, SCORM requires cmi.core.entry to return "ab-initio".
                This means there will be no pre-existing data, such as cmi.core.location, suspend_data, or score.
@@ -460,10 +459,10 @@ initializeCourse = function (){
 
         }
 
-	    params.bgcolor = CONFIG.swfBgColor;
-	    params.menu = (typeof params.menu !== "undefined") ? params.menu : (CONFIG.enableRightClick !== "") ? "false" : "true";
-	    params.wmode = CONFIG.swfWindowMode;
-	    attributes.name = CONFIG.targetElementID;
+        params.bgcolor = CONFIG.swfBgColor;
+        params.menu = (typeof params.menu !== "undefined") ? params.menu : (CONFIG.enableRightClick !== "") ? "false" : "true";
+        params.wmode = CONFIG.swfWindowMode;
+        attributes.name = CONFIG.targetElementID;
 
         swfobject.embedSWF(CONFIG.swflocation + "?SCORM_API=0.2&SCORM_TYPE=0",
                            CONFIG.targetElementID,

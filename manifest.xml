@@ -1,111 +1,111 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest identifier="@RD_MQZ_MANIFEST_ID" version="1.0"
-	xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
-	xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
-	<metadata>
-		<schema>ADL SCORM</schema>
-		<schemaversion>1.2</schemaversion>
-		<lom xmlns="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1"
-			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-			xsi:schemaLocation="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd">
-			<general>
-				<title>
-					<langstring xml:lang="x-none">@RD_MQZ_MANIFEST_TITLE</langstring>
-				</title>
-				<catalogentry>
-					<catalog>Adobe Captivate Course</catalog>
-					<entry>
-						<langstring xml:lang="x-none">@RD_MQZ_MANIFEST_ID_ENTRY</langstring>
-					</entry>
-				</catalogentry>
-				<description>
-					<langstring xml:lang="x-none">@RD_MQZ_MANIFEST_DESCRIPTION</langstring>
-				</description>
-				<keyword>
-					<langstring xml:lang="x-none">@RD_MQZ_MANIFEST_SUBJECT</langstring>
-				</keyword>
-			</general>
-			<lifecycle>
-				<version>
-					<langstring xml:lang="x-none">@RD_MQZ_MANIFEST_LIFE_VER</langstring>
-				</version>
-				<status>
-					<source>
-						<langstring xml:lang="x-none">LOMv1.0</langstring>
-					</source>
-					<value>
-						<langstring xml:lang="x-none">Final</langstring>
-					</value>
-				</status>
-			</lifecycle>
-			<metametadata>
-				<metadatascheme>ADL SCORM 1.2</metadatascheme>
-			</metametadata>
-			<technical>
-				<format>text/html</format>
-				<location>.</location>
-			</technical>
-			<educational>
-				<typicallearningtime>
-					<datetime>@RD_MQZ_MANIFEST_DURATION</datetime>
-				</typicallearningtime>
-			</educational>
-			<rights>
-				<cost>
-					<source>
-						<langstring xml:lang="x-none">LOMv1.0</langstring>
-					</source>
-					<value>
-						<langstring xml:lang="x-none">no</langstring>
-					</value>
-				</cost>
-				<copyrightandotherrestrictions>
-					<source>
-						<langstring xml:lang="x-none">LOMv1.0</langstring>
-					</source>
-					<value>
-						<langstring xml:lang="x-none">no</langstring>
-					</value>
-				</copyrightandotherrestrictions>
-			</rights>
-			<classification>
-				<purpose>
-					<source>
-						<langstring xml:lang="x-none">LOMv1.0</langstring>
-					</source>
-					<value>
-						<langstring xml:lang="x-none">Idea</langstring>
-					</value>
-				</purpose>
-				<description>
-					<langstring xml:lang="x-none">@RD_MQZ_MANIFEST_DESCRIPTION_CLASSIFICATION</langstring>
-				</description>
-				<keyword>
-					<langstring xml:lang="x-none">Adobe Captivate</langstring>
-					<langstring xml:lang="x-none">@RD_MQZ_MANIFEST_CLASSIFICATION_SUBJECT</langstring>
-				</keyword>
-			</classification>
-		</lom>
-	</metadata>
-	<organizations default="@RD_MQZ_MANIFEST_ORGS_ID">
-		<organization identifier="@RD_MQZ_MANIFEST_ID_ORG">
-			<title>@RD_MQZ_MANIFEST_TITLE_ORG</title>
-			<item identifier="@RD_MQZ_MANIFEST_ID_SCO" isvisible="true" identifierref="@RD_MQZ_MANIFEST_ID_RES_REF">
-				<title>@RD_MQZ_MANIFEST_TITLE_SCO</title>
-				<adlcp:maxtimeallowed>@RD_MQZ_MANIFEST_SCO_TIME</adlcp:maxtimeallowed>
-				<adlcp:datafromlms>@RD_MQZ_MANIFEST_SCO_DATA</adlcp:datafromlms>
-				<adlcp:masteryscore>@RD_MQZ_MANIFEST_SCO_MASTERY</adlcp:masteryscore>
-				<adlcp:timelimitaction>@RD_MQZ_MANIFEST_SCO_ACTION</adlcp:timelimitaction>
-			</item>
-		</organization>
-	</organizations>
-	<resources>
-		<resource identifier="@RD_MQZ_MANIFEST_ID_RES" type="webcontent" href="@RD_MQZ_MANIFEST_HTM_NAME_HREF" adlcp:scormtype="sco">
-	        <file href="@RD_MQZ_MANIFEST_SWF_NAME"/>
-		    <file href="@RD_MQZ_MANIFEST_HTM_NAME"/>
+    xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+    xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+    <metadata>
+        <schema>ADL SCORM</schema>
+        <schemaversion>1.2</schemaversion>
+        <lom xmlns="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd">
+            <general>
+                <title>
+                    <langstring xml:lang="x-none">@RD_MQZ_MANIFEST_TITLE</langstring>
+                </title>
+                <catalogentry>
+                    <catalog>Adobe Captivate Course</catalog>
+                    <entry>
+                        <langstring xml:lang="x-none">@RD_MQZ_MANIFEST_ID_ENTRY</langstring>
+                    </entry>
+                </catalogentry>
+                <description>
+                    <langstring xml:lang="x-none">@RD_MQZ_MANIFEST_DESCRIPTION</langstring>
+                </description>
+                <keyword>
+                    <langstring xml:lang="x-none">@RD_MQZ_MANIFEST_SUBJECT</langstring>
+                </keyword>
+            </general>
+            <lifecycle>
+                <version>
+                    <langstring xml:lang="x-none">@RD_MQZ_MANIFEST_LIFE_VER</langstring>
+                </version>
+                <status>
+                    <source>
+                        <langstring xml:lang="x-none">LOMv1.0</langstring>
+                    </source>
+                    <value>
+                        <langstring xml:lang="x-none">Final</langstring>
+                    </value>
+                </status>
+            </lifecycle>
+            <metametadata>
+                <metadatascheme>ADL SCORM 1.2</metadatascheme>
+            </metametadata>
+            <technical>
+                <format>text/html</format>
+                <location>.</location>
+            </technical>
+            <educational>
+                <typicallearningtime>
+                    <datetime>@RD_MQZ_MANIFEST_DURATION</datetime>
+                </typicallearningtime>
+            </educational>
+            <rights>
+                <cost>
+                    <source>
+                        <langstring xml:lang="x-none">LOMv1.0</langstring>
+                    </source>
+                    <value>
+                        <langstring xml:lang="x-none">no</langstring>
+                    </value>
+                </cost>
+                <copyrightandotherrestrictions>
+                    <source>
+                        <langstring xml:lang="x-none">LOMv1.0</langstring>
+                    </source>
+                    <value>
+                        <langstring xml:lang="x-none">no</langstring>
+                    </value>
+                </copyrightandotherrestrictions>
+            </rights>
+            <classification>
+                <purpose>
+                    <source>
+                        <langstring xml:lang="x-none">LOMv1.0</langstring>
+                    </source>
+                    <value>
+                        <langstring xml:lang="x-none">Idea</langstring>
+                    </value>
+                </purpose>
+                <description>
+                    <langstring xml:lang="x-none">@RD_MQZ_MANIFEST_DESCRIPTION_CLASSIFICATION</langstring>
+                </description>
+                <keyword>
+                    <langstring xml:lang="x-none">Adobe Captivate</langstring>
+                    <langstring xml:lang="x-none">@RD_MQZ_MANIFEST_CLASSIFICATION_SUBJECT</langstring>
+                </keyword>
+            </classification>
+        </lom>
+    </metadata>
+    <organizations default="@RD_MQZ_MANIFEST_ORGS_ID">
+        <organization identifier="@RD_MQZ_MANIFEST_ID_ORG">
+            <title>@RD_MQZ_MANIFEST_TITLE_ORG</title>
+            <item identifier="@RD_MQZ_MANIFEST_ID_SCO" isvisible="true" identifierref="@RD_MQZ_MANIFEST_ID_RES_REF">
+                <title>@RD_MQZ_MANIFEST_TITLE_SCO</title>
+                <adlcp:maxtimeallowed>@RD_MQZ_MANIFEST_SCO_TIME</adlcp:maxtimeallowed>
+                <adlcp:datafromlms>@RD_MQZ_MANIFEST_SCO_DATA</adlcp:datafromlms>
+                <adlcp:masteryscore>@RD_MQZ_MANIFEST_SCO_MASTERY</adlcp:masteryscore>
+                <adlcp:timelimitaction>@RD_MQZ_MANIFEST_SCO_ACTION</adlcp:timelimitaction>
+            </item>
+        </organization>
+    </organizations>
+    <resources>
+        <resource identifier="@RD_MQZ_MANIFEST_ID_RES" type="webcontent" href="@RD_MQZ_MANIFEST_HTM_NAME_HREF" adlcp:scormtype="sco">
+            <file href="@RD_MQZ_MANIFEST_SWF_NAME"/>
+            <file href="@RD_MQZ_MANIFEST_HTM_NAME"/>
             <file href="SCORM_support/scorm_support.js"/>
-		</resource>
-	</resources>
+        </resource>
+    </resources>
 </manifest>

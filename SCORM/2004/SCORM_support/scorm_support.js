@@ -1,6 +1,6 @@
 /*global RightClick, swfobject */
 /* scorm_support.js, rewritten by Philip Hutchison, January 2012
-   version 1.20120202
+   version 1.20120221
    http://pipwerks.com/2012/01/11/cleaning-up-adobe-captivates-scorm-publishing-template-part-1-introduction/
 */
 
@@ -30,7 +30,6 @@ var CONFIG = {},
     createWrapper,
     unloadHandler,
     initializeCourse;
-
 
 
 /*
@@ -465,10 +464,10 @@ initializeCourse = function (){
 
         }
 
-	    params.bgcolor = CONFIG.swfBgColor;
-	    params.menu = (typeof params.menu !== "undefined") ? params.menu : (CONFIG.enableRightClick !== "") ? "false" : "true";
-	    params.wmode = CONFIG.swfWindowMode;
-	    attributes.name = CONFIG.targetElementID;
+        params.bgcolor = CONFIG.swfBgColor;
+        params.menu = (typeof params.menu !== "undefined") ? params.menu : (CONFIG.enableRightClick !== "") ? "false" : "true";
+        params.wmode = CONFIG.swfWindowMode;
+        attributes.name = CONFIG.targetElementID;
 
         swfobject.embedSWF(CONFIG.swflocation + "?SCORM_API=1.0&SCORM_TYPE=0",
                            CONFIG.targetElementID,
