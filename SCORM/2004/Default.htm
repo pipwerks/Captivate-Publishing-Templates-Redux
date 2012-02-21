@@ -34,7 +34,6 @@
     CONFIG.scormUnavailableMessage = "Sorry, but the course is not available at this time (SCORM API not found or malfunctioning). Please try again. If you continue to encounter problems, please contact the course administrator.";
 
 
-
     //Need to run any of your own JavaScript? Place it inside this function.
     //Important: this function is only invoked after the SWF has finished loading!
     //For large SWFs, it could take a while.
@@ -65,18 +64,10 @@
     CONFIG.swfWindowMode = "@WMODEVALUE";
     CONFIG.enableRightClick = '@IsRightClickFunctionalityRequired';
 
-    //For SWFObject
-    params.bgcolor = CONFIG.swfBgColor;
-    params.menu = "false";
-    params.wmode = CONFIG.swfWindowMode;
-    attributes.name = CONFIG.targetElementID;
-
-    initializeCourse();
-
 </script>
 <style>
     body { text-align: center; margin: 0; padding: 1em; height: 100%; background: @SKINCOLOR }
-body.centered { margin: 0; padding: 0; overflow: hidden; }
+   	body.centered { margin: 0; padding: 0; overflow: hidden; }
     body.centered #Captivate { position: absolute; top: 50%; left: 50%; } /* JavaScript is used to set pixel values for margin-left and margin-top */
 </style>
 </head>

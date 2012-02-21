@@ -386,28 +386,28 @@ swfobjectCallbackHandler = function (e){
 
 
 /*
-   createWrapper(targetID, wrapperID)
+   createWrapper(existing_div_ID, wrapper_div_ID)
    Creates a wrapper DIV around the SWF for compatibility with RightClick utility
 
-   Parameters:  targetID, wrapperID
+   Parameters:  existing_div_ID, wrapper_div_ID
    Returns:     none
 */
 
-createWrapper = function (targetID, wrapperID){
+createWrapper = function (existing_div_ID, wrapper_div_ID){
 
-    var target = document.getElementById(targetID);
+    var existing_div = document.getElementById(existing_div_ID);
 
-    if(target){
+    if(existing_div){
 
         //Turn the original div into the wrapper div
-        target.setAttribute("id", wrapperID);
+        existing_div.id = wrapper_div_ID;
 
         //Create new child element
-        var new_target = document.createElement("div");
-        new_target.setAttribute("id", targetID);
+        var wrapper_div = document.createElement("div");
+        wrapper_div.id = existing_div_ID;
 
         //Place original element inside new element.
-        target.appendChild(new_target);
+        existing_div.appendChild(wrapper_div);
 
     }
 
@@ -446,7 +446,6 @@ initializeCourse = function (){
     //Initialize SCORM API
     SCORM_API = getAPI();
 
-
     //Only embed SWF if SCORM API is found
     if(CONFIG.requireSCORMAPI && !SCORM_API){
 
@@ -461,10 +460,15 @@ initializeCourse = function (){
 
             //Create wrapper around original target element
             swfobject.addDomLoadEvent(function(){
-                createWrapper("Captivate", "CaptivateContent");
+                createWrapper(CONFIG.targetElementID, "CaptivateContent");
             });
 
         }
+
+	    params.bgcolor = CONFIG.swfBgColor;
+	    params.menu = (typeof params.menu !== "undefined") ? params.menu : (CONFIG.enableRightClick !== "") ? "false" : "true";
+	    params.wmode = CONFIG.swfWindowMode;
+	    attributes.name = CONFIG.targetElementID;
 
         swfobject.embedSWF(CONFIG.swflocation + "?SCORM_API=1.0&SCORM_TYPE=0",
                            CONFIG.targetElementID,
@@ -484,5 +488,4 @@ initializeCourse = function (){
 
 window.onbeforeunload = unloadHandler;
 window.onunload = unloadHandler;
-
-initializeCourse();
+window.onload = initializeCourse;

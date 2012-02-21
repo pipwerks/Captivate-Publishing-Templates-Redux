@@ -441,7 +441,6 @@ initializeCourse = function (){
     //Initialize SCORM API
     SCORM_API = getAPI();
 
-
     //Only embed SWF if SCORM API is found
     if(CONFIG.requireSCORMAPI && !SCORM_API){
 
@@ -461,6 +460,11 @@ initializeCourse = function (){
 
         }
 
+	    params.bgcolor = CONFIG.swfBgColor;
+	    params.menu = (typeof params.menu !== "undefined") ? params.menu : (CONFIG.enableRightClick !== "") ? "false" : "true";
+	    params.wmode = CONFIG.swfWindowMode;
+	    attributes.name = CONFIG.targetElementID;
+
         swfobject.embedSWF(CONFIG.swflocation + "?SCORM_API=0.2&SCORM_TYPE=0",
                            CONFIG.targetElementID,
                            CONFIG.swfWidth,
@@ -479,5 +483,4 @@ initializeCourse = function (){
 
 window.onbeforeunload = unloadHandler;
 window.onunload = unloadHandler;
-
-initializeCourse();
+window.onload = initializeCourse;
