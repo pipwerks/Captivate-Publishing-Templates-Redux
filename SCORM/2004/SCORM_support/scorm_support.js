@@ -1,6 +1,6 @@
 /*global RightClick, swfobject */
 /* scorm_support.js, rewritten by Philip Hutchison, January 2012
-   version 1.20120221
+   version 1.20120226
    http://pipwerks.com/2012/01/11/cleaning-up-adobe-captivates-scorm-publishing-template-part-1-introduction/
 */
 
@@ -59,7 +59,7 @@ logEvent = function (msg){
 isCached = function(property, value){
 
     //Ensure we have a valid property to work with
-    if(typeof property === "undefined"){ return false; }
+    if(typeof property === "undefined" || typeof value === "undefined"){ return false; }
 
     //Replace all periods in CMI property names so we don't run into JS errors
     property = property.replace(/\./g,'_');
@@ -70,9 +70,7 @@ isCached = function(property, value){
     }
 
     //Otherwise add to cache
-    if(typeof value !== "undefined"){
-        value_store[property] = value;
-    }
+    value_store[property] = value;
 
     return false;
 
@@ -162,11 +160,7 @@ getAPI = function(){
 
 Captivate_DoExternalInterface = function (command, parameter, value, variable) {
 
-    logEvent("Captivate_DoExternalInterface: \n" +
-             "command: " +command +"\n" +
-             "parameter: " +parameter +"\n" +
-             "value: " +value +"\n" +
-             "variable: " +variable);
+    logEvent("Captivate_DoExternalInterface. command: " +command +", parameter: " +parameter +", value: '" +value +"', variable: " +variable);
 
     var strErr = "true",
         intercept = false;
@@ -176,7 +170,10 @@ Captivate_DoExternalInterface = function (command, parameter, value, variable) {
 
     switch(command){
 
-        case "Initialize": break; //We already initialized, just nod politely and tell the SWF everything is okay!
+        case "Initialize":
+
+            logEvent(" -- SCORM_API.Initialize cancelled: already initialized.");
+            break; //We already initialized, just nod politely and tell the SWF everything is okay!
 
         case "SetValue":
 
@@ -187,6 +184,7 @@ Captivate_DoExternalInterface = function (command, parameter, value, variable) {
             //to the LMS, prevent value from being sent a second time.
             if(!isCached(parameter, value)){
 
+                logEvent(" -- SetValue. '" +parameter + "' not cached. Setting value: '" +value +"'");
                 strErr = SCORM_API.SetValue(parameter, value);
                 setValueWasSuccessful = (strErr === "true");
 
@@ -194,7 +192,7 @@ Captivate_DoExternalInterface = function (command, parameter, value, variable) {
 
                 //Fakin' it for Captivate's sake.
                 setValueWasSuccessful = true;
-                logEvent("SCORM_API.SetValue cancelled: specified value is already set in LMS. \n" +parameter +", " +value);
+                logEvent(" -- SetValue cancelled: specified value is already set in LMS. " +parameter +", " +value);
 
             }
 
@@ -225,13 +223,31 @@ Captivate_DoExternalInterface = function (command, parameter, value, variable) {
 
             */
 
-            strErr = (entryStatus === "ab-initio" && /location|suspend_data|score/g.test(parameter)) ? "" : SCORM_API.GetValue(parameter);
+            if(entryStatus === "ab-initio" && /location|suspend_data|score/g.test(parameter)){
+
+                logEvent(" -- SCORM_API.GetValue cancelled: The LMS will return an error if '" +parameter +"' is called when the course entry status is ab-initio.");
+                strErr = "";
+
+            } else {
+
+                strErr = SCORM_API.GetValue(parameter);
+
+            }
+
             break;
 
         case "Terminate":
 
-            strErr = SCORM_API.Terminate("");
-            isTerminated = (strErr === "true");
+            if(isTerminated){
+
+                logEvent(" -- SCORM_API.Terminate cancelled: Already terminated.");
+
+            } else {
+
+                strErr = SCORM_API.Terminate("");
+                isTerminated = (strErr === "true");
+
+            }
 
             break;
 
@@ -242,7 +258,7 @@ Captivate_DoExternalInterface = function (command, parameter, value, variable) {
             if(lastCommand === "SetValue" && setValueWasSuccessful){
 
                 strErr = "";
-                logEvent("SCORM_API.GetLastError cancelled: redundant call.");
+                logEvent(" -- SCORM_API.GetLastError cancelled: redundant call.");
 
             } else {
 
@@ -449,7 +465,7 @@ initializeCourse = function (){
     if(CONFIG.requireSCORMAPI && !SCORM_API){
 
         //Provide a useful error message for the learner. Will only show up if SCORM API is not found!
-        swfobject.addDomLoadEvent(displayScormFailureMessage);
+        displayScormFailureMessage();
 
     } else {
 
@@ -458,9 +474,7 @@ initializeCourse = function (){
         if(CONFIG.enableRightClick !== ""){
 
             //Create wrapper around original target element
-            swfobject.addDomLoadEvent(function(){
-                createWrapper(CONFIG.targetElementID, "CaptivateContent");
-            });
+            createWrapper(CONFIG.targetElementID, "CaptivateContent");
 
         }
 
@@ -487,4 +501,4 @@ initializeCourse = function (){
 
 window.onbeforeunload = unloadHandler;
 window.onunload = unloadHandler;
-window.onload = initializeCourse;
+swfobject.addDomLoadEvent(initializeCourse);

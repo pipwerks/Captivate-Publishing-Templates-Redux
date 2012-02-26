@@ -1,7 +1,7 @@
 /*global RightClick, swfobject */
 /* scorm_support.js, rewritten by Philip Hutchison, January 2012
    --- SCORM 1.2 Edition ---
-   version 1.20120221
+   version 1.20120226
    http://pipwerks.com/2012/01/11/cleaning-up-adobe-captivates-scorm-publishing-template-part-1-introduction/
 */
 
@@ -60,7 +60,7 @@ logEvent = function (msg){
 isCached = function(property, value){
 
     //Ensure we have a valid property to work with
-    if(typeof property === "undefined"){ return false; }
+    if(typeof property === "undefined" || typeof value === "undefined"){ return false; }
 
     //Replace all periods in CMI property names so we don't run into JS errors
     property = property.replace(/\./g,'_');
@@ -71,9 +71,7 @@ isCached = function(property, value){
     }
 
     //Otherwise add to cache
-    if(typeof value !== "undefined"){
-        value_store[property] = value;
-    }
+    value_store[property] = value;
 
     return false;
 
@@ -163,7 +161,7 @@ getAPI = function(){
 
 Captivate_DoExternalInterface = function (command, parameter, value, variable) {
 
-    logEvent("Captivate_DoExternalInterface('" +command +"','" + "'" +parameter +"'," +"'" +value +"'," +"'" +variable +"')");
+    logEvent("Captivate_DoExternalInterface. command: " +command +", parameter: " +parameter +", value: '" +value +"', variable: " +variable);
 
     var strErr = "true",
         intercept = false;
@@ -173,7 +171,10 @@ Captivate_DoExternalInterface = function (command, parameter, value, variable) {
 
     switch(command){
 
-        case "LMSInitialize": break; //We already initialized, just nod politely and tell the SWF everything is okay!
+        case "LMSInitialize":
+
+            logEvent(" -- SCORM_API.LMSInitialize cancelled: already initialized.");
+            break; //We already initialized, just nod politely and tell the SWF everything is okay!
 
         case "LMSSetValue":
 
@@ -184,6 +185,7 @@ Captivate_DoExternalInterface = function (command, parameter, value, variable) {
             //to the LMS, prevent value from being sent a second time.
             if(!isCached(parameter, value)){
 
+                logEvent(" -- LMSSetValue. '" +parameter + "' not cached. Setting value: '" +value +"'");
                 strErr = SCORM_API.LMSSetValue(parameter, value);
                 setValueWasSuccessful = (strErr === "true");
 
@@ -191,7 +193,7 @@ Captivate_DoExternalInterface = function (command, parameter, value, variable) {
 
                 //Fakin' it for Captivate's sake.
                 setValueWasSuccessful = true;
-                logEvent("SCORM_API.LMSSetValue cancelled: specified value is already set in LMS. \n" +parameter +", " +value);
+                logEvent(" -- LMSSetValue cancelled: specified value is already set in LMS. " +parameter +", " +value);
 
             }
 
@@ -219,13 +221,31 @@ Captivate_DoExternalInterface = function (command, parameter, value, variable) {
 
             */
 
-            strErr = (entryStatus === "ab-initio" && /location|suspend_data|score/g.test(parameter)) ? "" : SCORM_API.LMSGetValue(parameter);
+            if(entryStatus === "ab-initio" && /location|suspend_data|score/g.test(parameter)){
+
+                logEvent(" -- SCORM_API.LMSGetValue cancelled: The LMS will return an error if '" +parameter +"' is called when the course entry status is ab-initio.");
+                strErr = "";
+
+            } else {
+
+                 strErr = SCORM_API.LMSGetValue(parameter);
+
+            }
+
             break;
 
         case "LMSFinish":
 
-            strErr = SCORM_API.LMSFinish("");
-            isTerminated = (strErr === "true");
+            if(isTerminated){
+
+                logEvent(" -- SCORM_API.LMSFinish cancelled: Already terminated.");
+
+            } else {
+
+                strErr = SCORM_API.LMSFinish("");
+                isTerminated = (strErr === "true");
+
+            }
 
             break;
 
@@ -236,7 +256,7 @@ Captivate_DoExternalInterface = function (command, parameter, value, variable) {
             if(lastCommand === "LMSSetValue" && setValueWasSuccessful){
 
                 strErr = "";
-                logEvent("SCORM_API.LMSGetLastError cancelled: redundant call.");
+                logEvent(" -- SCORM_API.LMSGetLastError cancelled: redundant call.");
 
             } else {
 
@@ -248,7 +268,6 @@ Captivate_DoExternalInterface = function (command, parameter, value, variable) {
 
         default:
 
-            logEvent("Using 'default' fallthrough in switch statement.");
             if(value && value.length > 0){
                 strErr = SCORM_API[command](parameter);
             }
@@ -380,28 +399,28 @@ swfobjectCallbackHandler = function (e){
 
 
 /*
-   createWrapper(targetID, wrapperID)
+   createWrapper(existing_div_ID, wrapper_div_ID)
    Creates a wrapper DIV around the SWF for compatibility with RightClick utility
 
-   Parameters:  targetID, wrapperID
+   Parameters:  existing_div_ID, wrapper_div_ID
    Returns:     none
 */
 
-createWrapper = function (targetID, wrapperID){
+createWrapper = function (existing_div_ID, wrapper_div_ID){
 
-    var target = document.getElementById(targetID);
+    var existing_div = document.getElementById(existing_div_ID);
 
-    if(target){
+    if(existing_div){
 
         //Turn the original div into the wrapper div
-        target.setAttribute("id", wrapperID);
+        existing_div.id = wrapper_div_ID;
 
         //Create new child element
-        var new_target = document.createElement("div");
-        new_target.setAttribute("id", targetID);
+        var wrapper_div = document.createElement("div");
+        wrapper_div.id = existing_div_ID;
 
         //Place original element inside new element.
-        target.appendChild(new_target);
+        existing_div.appendChild(wrapper_div);
 
     }
 
@@ -444,7 +463,7 @@ initializeCourse = function (){
     if(CONFIG.requireSCORMAPI && !SCORM_API){
 
         //Provide a useful error message for the learner. Will only show up if SCORM API is not found!
-        swfobject.addDomLoadEvent(displayScormFailureMessage);
+        displayScormFailureMessage();
 
     } else {
 
@@ -453,9 +472,7 @@ initializeCourse = function (){
         if(CONFIG.enableRightClick !== ""){
 
             //Create wrapper around original target element
-            swfobject.addDomLoadEvent(function(){
-                createWrapper("Captivate", "CaptivateContent");
-            });
+            createWrapper(CONFIG.targetElementID, "CaptivateContent");
 
         }
 
@@ -482,4 +499,4 @@ initializeCourse = function (){
 
 window.onbeforeunload = unloadHandler;
 window.onunload = unloadHandler;
-window.onload = initializeCourse;
+swfobject.addDomLoadEvent(initializeCourse);
