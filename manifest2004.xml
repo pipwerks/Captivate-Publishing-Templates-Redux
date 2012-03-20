@@ -106,6 +106,7 @@
             <file href="@RD_MQZ_MANIFEST_SWF_NAME"></file>
             <file href="@RD_MQZ_MANIFEST_HTM_NAME"></file>
             <file href="SCORM_support/scorm_support.js"/>
+            <file href="standard.js"/>
         </resource>
     </resources>
 </manifest>
