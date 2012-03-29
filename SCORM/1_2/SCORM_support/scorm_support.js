@@ -220,7 +220,7 @@ Captivate_DoExternalInterface = function (command, parameter, value, variable) {
 
             */
 
-            if(entryStatus === "ab-initio" && /location|suspend_data|score/g.test(parameter)){
+            if(entryStatus === "ab-initio" && /location|suspend_data|score\.(raw|min|max|scaled)/g.test(parameter)){
 
                 logEvent(" -- SCORM_API.LMSGetValue cancelled: The LMS will return an error if '" +parameter +"' is called when the course entry status is ab-initio.");
                 strErr = "";
