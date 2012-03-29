@@ -1,6 +1,6 @@
 /*global RightClick, swfobject */
 /* scorm_support.js, rewritten by Philip Hutchison, January 2012
-   version 1.20120226
+   version 1.20120328
    http://pipwerks.com/2012/01/11/cleaning-up-adobe-captivates-scorm-publishing-template-part-1-introduction/
 */
 
