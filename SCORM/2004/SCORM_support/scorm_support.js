@@ -63,7 +63,7 @@ isCached = function(property, value){
 
     //Replace all periods in CMI property names so we don't run into JS errors
     property = property.replace(/\./g,'_');
-
+    
     //If prop/value pair is cached, return true
     if(typeof value_store[property] !== "undefined" && value_store[property] === value){
         return true;
@@ -162,8 +162,7 @@ Captivate_DoExternalInterface = function (command, parameter, value, variable) {
 
     logEvent("Captivate_DoExternalInterface. command: " +command +", parameter: " +parameter +", value: '" +value +"', variable: " +variable);
 
-    var strErr = "true",
-        intercept = false;
+    var strErr = "true";
 
     //Ensure SCORM API was initialized before attemptng communicaton
     if(!isInitialized){ return; }
@@ -378,7 +377,7 @@ swfobjectCallbackHandler = function (e){
         if(customJavaScript && typeof customJavaScript === "function"){
 
             //This timeout ensures we don't try to access PercentLoaded too soon
-            var initialTimeout = setTimeout(function (){
+            setTimeout(function (){
                 //Ensure Flash Player's PercentLoaded method is available and returns a value
                 if(typeof CaptivateSWF.PercentLoaded !== "undefined" && CaptivateSWF.PercentLoaded()){
                     //Set up a timer to periodically check value of PercentLoaded

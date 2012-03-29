@@ -163,8 +163,7 @@ Captivate_DoExternalInterface = function (command, parameter, value, variable) {
 
     logEvent("Captivate_DoExternalInterface. command: " +command +", parameter: " +parameter +", value: '" +value +"', variable: " +variable);
 
-    var strErr = "true",
-        intercept = false;
+    var strErr = "true";
 
     //Ensure SCORM API was initialized before attemptng communicaton
     if(!isInitialized){ return; }
@@ -376,7 +375,7 @@ swfobjectCallbackHandler = function (e){
         if(customJavaScript && typeof customJavaScript === "function"){
 
             //This timeout ensures we don't try to access PercentLoaded too soon
-            var initialTimeout = setTimeout(function (){
+            setTimeout(function (){
                 //Ensure Flash Player's PercentLoaded method is available and returns a value
                 if(typeof CaptivateSWF.PercentLoaded !== "undefined" && CaptivateSWF.PercentLoaded()){
                     //Set up a timer to periodically check value of PercentLoaded
