@@ -478,6 +478,7 @@ initializeCourse = function (){
         params.bgcolor = CONFIG.swfBgColor;
         params.menu = (typeof params.menu !== "undefined") ? params.menu : (CONFIG.enableRightClick !== "") ? "false" : "true";
         params.wmode = CONFIG.swfWindowMode;
+		params.allowscriptaccess = "always";
         attributes.name = CONFIG.targetElementID;
 
         swfobject.embedSWF(CONFIG.swflocation + "?SCORM_API=0.2&SCORM_TYPE=0",
